@@ -5,6 +5,8 @@ import java.util.Properties;
 
 /**
  * 编写工具类读取config.properties配置文件信息
+ *
+ * 获取配置文件的工具类信息。
  */
 public class ConfigUtil {
     //定义一个properties对象
@@ -84,7 +86,7 @@ public class ConfigUtil {
         return properties.getProperty("kafka.topic");
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         System.out.println(ConfigUtil.canalServerIp());
-    }
+    }*/
 }
