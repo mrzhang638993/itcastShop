@@ -91,10 +91,16 @@ public class RowData implements ProtoBufable {
             this.tableName = map.get("tableName").toString();
             this.eventType = map.get("eventType").toString();
             this.columns = (Map<String, String>)map.get("columns");
+        }else {
+            // 需要提示相关的属性信息不存在的，后续需要处理的时候需要进行处理操作的。增强代码的健壮性的操作的。
         }
     }
 
+    /**
+     * protobuf的反序列化操作实现
+     * */
     public RowData(byte[] bytes) {
+        //  需要从上面的map中的对象的数据转化成为protobuf中可以序列化的对象进行序列化操作实现的。
         try {
             CanalModel.RowData rowData = CanalModel.RowData.parseFrom(bytes);
             this.logfileName = rowData.getLogfileName();
@@ -113,6 +119,7 @@ public class RowData implements ProtoBufable {
     /**
      * 这是核心方法，这个方法是需要接受到的binlog日志解析后的属性赋值给protoBuf的bean，返回返回
      * 序列化后的protobuf的字节码
+     * 对应的表示的是序列化的方式执行操作的。
      * @return
      */
     @Override
@@ -130,6 +137,10 @@ public class RowData implements ProtoBufable {
         return builder.build().toByteArray();
     }
 
+
+    /**
+     * 返回当前对象的序列化方式和相关的操作信息的。
+     * */
     @Override
     public String toString() {
         return JSON.toJSONString(this);

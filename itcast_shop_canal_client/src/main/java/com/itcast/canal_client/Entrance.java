@@ -8,7 +8,9 @@ import com.alibaba.otter.canal.client.CanalConnectors;
 public class Entrance {
     public static void main(String[] args) {
         //实例化对象，调用start方法拉取canalserver端的数据
-        CanalClient client = new CanalClient();
-        client.start();
+        //CanalClient client = new CanalClient();
+        //client.start();
+        MyCanalClient myCanalClient=new MyCanalClient();
+        myCanalClient.start();
     }
 }

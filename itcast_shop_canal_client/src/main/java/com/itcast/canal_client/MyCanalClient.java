@@ -6,80 +6,79 @@ import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.client.CanalConnectors;
 import com.alibaba.otter.canal.protocol.CanalEntry;
 import com.alibaba.otter.canal.protocol.Message;
+import com.alibaba.otter.canal.protocol.exception.CanalClientException;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.itcast.canal_client.kafka.KafkaSender;
 import com.itcast.canal_client.util.ConfigUtil;
-import cn.itcast.canal.bean.RowData;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
- * canal客户端
- * 与canal的服务端建立连接，然后获取canalserver的binlog日志
- * 读取mysql的binlog的日志文件信息，
- */
-public class CanalClient {
-    // 一次性读取BINLOG数据条数
-    private static final int BATCH_SIZE = 5 * 1024;
-    // Canal客户端连接器
-    private CanalConnector canalConnector;
-    // Canal配置项
-    private Properties properties;
+ * 定义初始化的最初的工具类的信息
+ *
+ * */
+public class MyCanalClient {
+
+    /**
+     * 引入日志框架，对应的完成相关的日志的操作和实现。
+     * */
+    private  CanalConnector canalConnector;
+
+    /**
+     * 构建kafka的消息发送者对象，完成相关的消息发送操作。
+     * */
     private KafkaSender kafkaSender;
 
     /**
-     * 构造方法，初始化连接，初始化kafka对象
-     */
-    public CanalClient() {
-        // 初始化连接，创建的是集群环境下面的canal信息的。
-        canalConnector = CanalConnectors.newClusterConnector(ConfigUtil.zookeeperServerIp(),
-                //对应的是canal的服务实例信息。
-                ConfigUtil.canalServerDestination(),
-                ConfigUtil.canalServerUsername(),
+     * 定义自己的构造器和对应的方法实现
+     * */
+    public  MyCanalClient(){
+         //  初始化客户端的连接操作的,对应的创建相关的客户端的canal的连接的。
+         canalConnector= CanalConnectors.
+                newClusterConnector(ConfigUtil.zookeeperServerIp(),
+                ConfigUtil.canalServerDestination()
+                ,ConfigUtil.canalServerUsername(),
                 ConfigUtil.canalServerPassword());
-        kafkaSender = new KafkaSender();
+        kafkaSender=new KafkaSender();
     }
 
-    // 开始监听
-    public void start() {
-        try {
-            while(true) {
-                // 建立连接
-                canalConnector.connect();
-                // 回滚上次的get请求，重新获取数据
-                canalConnector.rollback();
-                // 订阅匹配日志
-                canalConnector.subscribe(ConfigUtil.canalSubscribeFilter());
-                while(true) {
-                    // 批量拉取binlog日志，一次性获取多条数据
-                    Message message = canalConnector.getWithoutAck(BATCH_SIZE);
-                    // 获取batchId
-                    long batchId = message.getId();
-                    // 获取binlog数据的条数
-                    int size = message.getEntries().size();
-                    if(batchId == -1 || size == 0) {
-
-                    }
-                    else {
-                        Map binlogMsgMap = binlogMessageToMap(message);
-                        RowData rowData = new RowData(binlogMsgMap);
-                        System.out.println(rowData.toString());
-                        if (binlogMsgMap.size() > 0) {
-                            kafkaSender.send(rowData);
-                        }
-                    }
-                    // 确认指定的batchId已经消费成功
-                    canalConnector.ack(batchId);
-                }
-            }
-        } catch (InvalidProtocolBufferException e) {
-            e.printStackTrace();
-        } finally {
-            // 断开连接
-            canalConnector.disconnect();
-        }
+    public   void  start(){
+         try {
+             // 连接canal的服务器操作
+             canalConnector.connect();
+             // 自动回滚上一次未成功的处理
+             canalConnector.rollback();
+             // 订阅对应的信息,订阅指定的canal服务实例对象
+             canalConnector.subscribe(ConfigUtil.canalSubscribeFilter());
+             //  不停的循环获取数据进行消费数据信息
+             while (true){
+                 // 开始批次消费对应的canal的数据信息
+                 Message message = canalConnector.getWithoutAck(Integer.parseInt(ConfigUtil.kafkaBatch_size_config()));
+                 // 获取批次号id,对应的实现相关的批次数据的提交操作和管理实现。
+                 long id = message.getId();
+                 // 获取需要处理的数据集合信息
+                 List<CanalEntry.Entry> entries = message.getEntries();
+                 //  没有拉取到对应的数据，就不用管理相关的数据信息了。
+                 if (entries.size()==0||entries.size()==-1){
+                     //  表示没有获取到数据
+                     continue;
+                 }
+                 // 获取到数据,开始数据的解析操作。
+                 Map binlogMsgMap = binlogMessageToMap(message);
+                 RowData rowData = new RowData(binlogMsgMap);
+                 if (binlogMsgMap.size() > 0) {
+                     kafkaSender.send(rowData);
+                 }
+                 canalConnector.ack(id);
+             }
+         }catch (CanalClientException | InvalidProtocolBufferException canalClientException){
+             // 出现异常的话，释放对应的canal连接信息
+             // 打印日志操作和输出信息。
+         }finally {
+             canalConnector.disconnect();
+         }
     }
 
     /**
