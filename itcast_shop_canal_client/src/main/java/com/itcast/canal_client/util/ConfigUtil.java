@@ -86,7 +86,8 @@ public class ConfigUtil {
         return properties.getProperty("kafka.topic");
     }
 
-    /*public static void main(String[] args) {
-        System.out.println(ConfigUtil.canalServerIp());
-    }*/
+    public static void main(String[] args) {
+        //  测试可以获取得到对应的服务端的ip地址信息的。
+       // System.out.println(ConfigUtil.canalServerIp());
+    }
 }

@@ -18,6 +18,7 @@ import java.util.Properties;
 /**
  * canal客户端
  * 与canal的服务端建立连接，然后获取canalserver的binlog日志
+ * 读取mysql的binlog的日志文件信息，
  */
 public class CanalClient {
     // 一次性读取BINLOG数据条数
@@ -32,8 +33,9 @@ public class CanalClient {
      * 构造方法，初始化连接，初始化kafka对象
      */
     public CanalClient() {
-        // 初始化连接
+        // 初始化连接，创建的是集群环境下面的canal信息的。
         canalConnector = CanalConnectors.newClusterConnector(ConfigUtil.zookeeperServerIp(),
+                //对应的是canal的服务实例信息。
                 ConfigUtil.canalServerDestination(),
                 ConfigUtil.canalServerUsername(),
                 ConfigUtil.canalServerPassword());
