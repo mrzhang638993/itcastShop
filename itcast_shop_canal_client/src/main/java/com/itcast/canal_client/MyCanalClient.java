@@ -68,6 +68,7 @@ public class MyCanalClient {
                  // 获取到数据,开始数据的解析操作。
                  Map binlogMsgMap = binlogMessageToMap(message);
                  RowData rowData = new RowData(binlogMsgMap);
+                 System.out.println(rowData.toString());
                  if (binlogMsgMap.size() > 0) {
                      kafkaSender.send(rowData);
                  }
