@@ -3,14 +3,14 @@ package cn.itcast.shop.realtime.etl.app
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.runtime.state.filesystem.FsStateBackend
 import org.apache.flink.streaming.api.CheckpointingMode
+import org.apache.flink.streaming.api.datastream.DataStreamSource
 import org.apache.flink.streaming.api.environment.{CheckpointConfig, StreamExecutionEnvironment}
 
-import java.util
 
 /** *
  * 创建etl实时处理模块，进行etl实时处理操作
  */
-object App {
+object Apps {
 
   /**
    * 程序启动入口程序
@@ -46,9 +46,10 @@ object App {
     // 配置checkpoint的超时时长
     env.getCheckpointConfig.setCheckpointTimeout(60000)
     //  构建测试数据,对应的集合数据是java中的集合的数据信息的。
-    env.fromCollection(util.Arrays.asList("hadoop",
-    "hive",
-    "spark")).print()
+    //val value: DataStreamSource[String] = env.fromCollection(util.Arrays.asList("spark", "hive", "hadoop"))
+    // 或者执行如下的操作实现的
+    val value:DataStreamSource[String] = env.fromElements("spark", "hive", "hadoop")
+    value.print()
     env.execute()
   }
 }
