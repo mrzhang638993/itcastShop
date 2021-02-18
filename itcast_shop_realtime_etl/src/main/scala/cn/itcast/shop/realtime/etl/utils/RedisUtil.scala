@@ -33,6 +33,7 @@ object RedisUtil {
 
   /**
     * 获取Redis连接
+   *  jedispool会自动回收的,不需要释放资源进行操作的.
     * @return
     */
   def getJedis() = {
