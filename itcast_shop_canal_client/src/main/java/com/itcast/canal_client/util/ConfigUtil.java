@@ -11,7 +11,6 @@ import java.util.Properties;
 public class ConfigUtil {
     //定义一个properties对象
     private static Properties properties;
-
     //定义静态代码块，该代码只被执行一次
     static {
         try {
@@ -21,11 +20,9 @@ public class ConfigUtil {
             throw new RuntimeException(ex);
         }
     }
-
     public static String canalServerIp() {
         return properties.getProperty("canal.server.ip");
     }
-
     public static int canalServerPort() {
         return Integer.parseInt(properties.getProperty("canal.server.port"));
     }

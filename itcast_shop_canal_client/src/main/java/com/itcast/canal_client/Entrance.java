@@ -1,7 +1,4 @@
 package com.itcast.canal_client;
-
-import com.alibaba.otter.canal.client.CanalConnectors;
-
 /**
  * 程序入口类
  */

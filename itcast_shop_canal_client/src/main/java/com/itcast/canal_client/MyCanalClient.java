@@ -89,7 +89,6 @@ public class MyCanalClient {
      */
     private Map binlogMessageToMap(Message message) throws InvalidProtocolBufferException {
         Map rowDataMap = new HashMap();
-
         // 1. 遍历message中的所有binlog实体
         for (CanalEntry.Entry entry : message.getEntries()) {
             // 只处理事务型binlog
@@ -97,7 +96,6 @@ public class MyCanalClient {
                     entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONEND) {
                 continue;
             }
-
             // 获取binlog文件名
             String logfileName = entry.getHeader().getLogfileName();
             // 获取logfile的偏移量
@@ -110,14 +108,12 @@ public class MyCanalClient {
             String tableName = entry.getHeader().getTableName();
             // 获取事件类型 insert/update/delete
             String eventType = entry.getHeader().getEventType().toString().toLowerCase();
-
             rowDataMap.put("logfileName", logfileName);
             rowDataMap.put("logfileOffset", logfileOffset);
             rowDataMap.put("executeTime", executeTime);
             rowDataMap.put("schemaName", schemaName);
             rowDataMap.put("tableName", tableName);
             rowDataMap.put("eventType", eventType);
-
             // 获取所有行上的变更
             Map<String, String> columnDataMap = new HashMap<>();
             CanalEntry.RowChange rowChange = CanalEntry.RowChange.parseFrom(entry.getStoreValue());
@@ -134,10 +130,8 @@ public class MyCanalClient {
                     }
                 }
             }
-
             rowDataMap.put("columns", columnDataMap);
         }
-
         return rowDataMap;
     }
 
