@@ -9,8 +9,12 @@ import  org.apache.flink.streaming.api.scala.DataStream
 class MysqlBaseEtl  extends  BaseEtl[RowData]{
   /**
    * 读取kafka数据的抽象的方法的信息的
+   * 需要将二进制的字节码对象转化成为对象数据信息进行转换操作的。
+   * kafka的对象处理需要使用到protobuf进行操作的。可以快速的提高相关的数据的处理效率的。
    * */
-  override def getKafkaDataStream(topic: String): DataStream[RowData] = ???
+  override def getKafkaDataStream(topic: String): DataStream[RowData] = {
+
+  }
 
   /**
    * 根据业务抽取出来对应的etl的操作的方法的。
