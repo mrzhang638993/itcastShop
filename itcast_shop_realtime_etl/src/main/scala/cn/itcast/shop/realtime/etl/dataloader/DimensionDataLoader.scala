@@ -36,6 +36,10 @@ object DimensionDataLoader {
     //  加载维度表的数据到redis数据库中进行操作。
     //  装载商品维度表的数据信息。
     loadGoodDims(conn,jedis)
+    loadDimShops(conn,jedis)
+    loadDimGoodsCats(conn,jedis)
+    loadDimOrg(conn,jedis)
+    LoadDimShopCats(conn,jedis)
   }
 
 
