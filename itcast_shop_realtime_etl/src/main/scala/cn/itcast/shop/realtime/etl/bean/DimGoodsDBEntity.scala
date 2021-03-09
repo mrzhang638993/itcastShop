@@ -1,7 +1,5 @@
 package cn.itcast.shop.realtime.etl.bean
 
-import com.alibaba.fastjson.{JSON, JSONObject}
-
 import scala.beans.BeanProperty
 
 /**
@@ -53,7 +51,7 @@ case class DimGoodsCatDBEntity(@BeanProperty catId:String="",	// 商品分类id
 /**
  * 商品分类表的半生对象
  * */
-object DimGoodsCatDBEntity{
+/*object DimGoodsCatDBEntity{
 
    def apply(json:String): DimGoodsCatDBEntity ={
      if(json!=null){
@@ -68,7 +66,7 @@ object DimGoodsCatDBEntity{
        new DimGoodsCatDBEntity()
      }
    }
-}
+}*/
 
 // 店铺维度样例类
 case class DimShopsDBEntity(@BeanProperty shopId:Int=0,		// 店铺id
@@ -78,7 +76,7 @@ case class DimShopsDBEntity(@BeanProperty shopId:Int=0,		// 店铺id
 /**
  * 店铺维度的半生对象信息
  * */
-object DimShopsDBEntity{
+/*object DimShopsDBEntity{
   def apply(json:String):DimShopsDBEntity={
     if(json!=null){
       val jsonObject: JSONObject = JSON.parseObject(json)
@@ -92,7 +90,7 @@ object DimShopsDBEntity{
       new DimShopsDBEntity()
     }
   }
-}
+}*/
 
 // 组织结构维度样例类
 case class DimOrgDBEntity(@BeanProperty orgId:Int=0,			// 机构id
@@ -102,7 +100,7 @@ case class DimOrgDBEntity(@BeanProperty orgId:Int=0,			// 机构id
 /**
  * 组织结构的数据信息
  * */
-object DimOrgDBEntity{
+/*object DimOrgDBEntity{
 
    def apply(json:String):DimOrgDBEntity={
      if(json!=null){
@@ -117,7 +115,7 @@ object DimOrgDBEntity{
        new DimOrgDBEntity()
      }
    }
-}
+}*/
 
 // 门店商品分类维度样例类
 case class DimShopCatDBEntity(@BeanProperty catId:String = "",	 // 商品分类id
@@ -127,6 +125,7 @@ case class DimShopCatDBEntity(@BeanProperty catId:String = "",	 // 商品分类i
 /**
  * 门店的样例类信息
  * */
+/*
 object DimShopCatDBEntity{
     def apply(json:String): DimShopCatDBEntity ={
       if(json!=null){
@@ -141,4 +140,4 @@ object DimShopCatDBEntity{
         new DimShopCatDBEntity()
       }
     }
-}
+}*/
