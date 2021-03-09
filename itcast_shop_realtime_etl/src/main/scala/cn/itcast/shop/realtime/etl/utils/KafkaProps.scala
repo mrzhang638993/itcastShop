@@ -29,7 +29,7 @@ object KafkaProps {
     // 设置key的反序列化操作实现
     props.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,GlobalConfigUtil.`key.deserializer`)
     //设置value的反序列化操作
-    props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,GlobalConfigUtil.`key.deserializer`)
+    //props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,GlobalConfigUtil.`key.deserializer`)
     props
   }
 }
