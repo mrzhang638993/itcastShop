@@ -21,7 +21,7 @@ case class DimGoodsDBEntity(
 /**
  * 样例类的半生对象
  * */
-object DimGoodsDBEntity{
+/*object DimGoodsDBEntity{
   /**
    * 样例类的半生对象信息.
    * 目标是实现将字符串解析成为样例类对象信息。
@@ -40,7 +40,7 @@ object DimGoodsDBEntity{
         new DimGoodsDBEntity()
       }
    }
-}
+}*/
 
 /**
  * 商品分类表的数据信息
