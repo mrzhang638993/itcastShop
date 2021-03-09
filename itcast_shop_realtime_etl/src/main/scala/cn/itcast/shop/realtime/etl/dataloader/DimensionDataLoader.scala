@@ -40,6 +40,7 @@ object DimensionDataLoader {
     loadDimGoodsCats(conn,jedis)
     loadDimOrg(conn,jedis)
     LoadDimShopCats(conn,jedis)
+    System.exit(1)
   }
 
 

@@ -1,9 +1,10 @@
 package cn.itcast.shop.realtime.etl.app
 
+
+import cn.itcast.shop.realtime.etl.process
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.runtime.state.filesystem.FsStateBackend
 import org.apache.flink.streaming.api.CheckpointingMode
-import org.apache.flink.streaming.api.datastream.DataStreamSource
 import org.apache.flink.streaming.api.environment.{CheckpointConfig, StreamExecutionEnvironment}
 
 
@@ -48,8 +49,11 @@ object Apps {
     //  构建测试数据,对应的集合数据是java中的集合的数据信息的。
     //val value: DataStreamSource[String] = env.fromCollection(util.Arrays.asList("spark", "hive", "hadoop"))
     // 或者执行如下的操作实现的
-    val value:DataStreamSource[String] = env.fromElements("spark", "hive", "hadoop")
-    value.print()
+    //val value:DataStreamSource[String] = env.fromElements("spark", "hive", "hadoop")
+    //value.print()
+    // 实现相关的etl业务操作
+    // 增量同步数据到redis中执行数据增量同步操作,数据的全量导入操作前面已经执行完成了。
+    val syncDimData=process.SyncDimData(env)
     env.execute()
   }
 }
