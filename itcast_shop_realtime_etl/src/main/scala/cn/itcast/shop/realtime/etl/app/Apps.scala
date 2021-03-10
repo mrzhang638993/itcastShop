@@ -5,8 +5,8 @@ import cn.itcast.shop.realtime.etl.process
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.runtime.state.filesystem.FsStateBackend
 import org.apache.flink.streaming.api.CheckpointingMode
-import org.apache.flink.streaming.api.environment.{CheckpointConfig, StreamExecutionEnvironment}
-
+import org.apache.flink.streaming.api.environment.CheckpointConfig
+import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 
 /** *
  * 创建etl实时处理模块，进行etl实时处理操作
