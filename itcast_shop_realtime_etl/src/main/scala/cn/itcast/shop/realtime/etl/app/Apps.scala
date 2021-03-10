@@ -1,7 +1,7 @@
 package cn.itcast.shop.realtime.etl.app
 
 
-import cn.itcast.shop.realtime.etl.process
+import cn.itcast.shop.realtime.etl.process.SyncDimData
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.runtime.state.filesystem.FsStateBackend
 import org.apache.flink.streaming.api.CheckpointingMode
@@ -53,7 +53,8 @@ object Apps {
     //value.print()
     // 实现相关的etl业务操作
     // 增量同步数据到redis中执行数据增量同步操作,数据的全量导入操作前面已经执行完成了。
-    val syncDimData=process.SyncDimData(env)
+    val syncDimData=SyncDimData(env)
+    syncDimData.process()
     env.execute()
   }
 }

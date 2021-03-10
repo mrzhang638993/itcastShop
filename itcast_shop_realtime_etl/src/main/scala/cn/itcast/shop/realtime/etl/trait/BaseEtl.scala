@@ -17,5 +17,5 @@ trait BaseEtl[T] {
    * 抽取数据信息。
    * 根据业务抽取出来对应的etl的操作的方法的。实际的处理操作的方法，对应的是相关的etl的操作方法的。
    * */
-  def  process(dataStream: DataStream[T])
+  def  process()
 }
