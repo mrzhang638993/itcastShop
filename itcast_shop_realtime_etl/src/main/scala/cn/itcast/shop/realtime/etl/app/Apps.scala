@@ -25,7 +25,6 @@ object Apps {
      * 4.接入kafka数据源，消费kafka的数据信息
      * 5.实现所有的etl业务操作，执行任务操作实现。
      * */
-    //  TODO 设置flink的流式处理环境；
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     //  设置并行度,方便观察操作
     env.setParallelism(1)
