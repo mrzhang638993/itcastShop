@@ -180,6 +180,5 @@ case class SyncDimData(env: StreamExecutionEnvironment) extends MysqlBaseEtl(env
         }
       }
     })
-
   }
 }

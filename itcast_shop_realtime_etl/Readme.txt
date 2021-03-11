@@ -12,3 +12,10 @@ val str: String = JSON.toJSONString(value, SerializerFeature.DisableCircularRefe
 flink对应的使用的stream的环境信息如下:
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 
+日志的提取操作需要使用到相关的框架进行操作的。推荐使用框架来解决相关的nginx的日志框架样板的。
+这个是很关键的。
+lombok对应的是在编译的时候生成相关的get以及set等的方法的。
+点击流日志框架的处理需要使用到logparser框架执行解析操作和相关的实现的。
+
+
+
